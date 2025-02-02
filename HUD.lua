@@ -85,7 +85,7 @@ function onUpdatePost()
  -- TEXTS FOR HUDS
  local hudText = '- / Score: ' .. score .. ' / Misses: ' .. misses .. ' / ACC & Rating: ' .. acc .. '% [' .. ratingFC .. '] / -'
  local foreverHud = 'ok'
- local kadeHud = 'ok'
+ local kadeHud = 'Score: ' .. score .. ' | Combo Breaks: ' .. misses .. ' | Accuracy: ' .. acc .. '% - ' .. ratingFC ..
  
  if hudStyle == 'Default' then
   setTextString('scoreTxt', hudText)
