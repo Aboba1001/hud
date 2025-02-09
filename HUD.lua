@@ -78,11 +78,9 @@ function onSongStart()
 end
 
 function onUpdatePost()
- -- VARIABLES
  local acc = (string.sub(getProperty('ratingPercent')* 100,0,5))
  local health = tostring(getProperty('health') / 2 * 100)
  
- -- TEXTS FOR HUDS
  local hudText = '- / Score: ' .. score .. ' / Misses: ' .. misses .. ' / ACC & Rating: ' .. acc .. '% [' .. ratingFC .. '] / -'
  local foreverHud = 'ok'
  local kadeHud = 'Score: ' .. score .. ' | Combo Breaks: ' .. misses .. ' | Accuracy: ' .. acc .. '% - ' .. ratingFC ..
