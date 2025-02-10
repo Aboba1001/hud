@@ -10,7 +10,6 @@ local botplayTxts = {
  "I am 0.5km away from you",
  "WHY CAN\"T YOU JUST\nTURN ON PRACTICE MODE??!?!"
 }
-
 local debugMode = true -- Activates Debug Mode
 local hudStyle = "Default" -- Change HUD Style
 -- Default, Psych, Kade, Forever, osu!Mania
@@ -80,7 +79,7 @@ function onUpdatePost()
  local health = tostring(getProperty("health") / 2 * 100)
  
  local hudText = "- / Score: " .. score .. " / Misses: " .. misses .. " / ACC & Rating: " .. acc .. "% [" .. ratingFC .. "] / -"
- local foreverHud = "ok"
+ local foreverHud = "Score: " .. score .. " • Combo Breaks: " ... misses
  local kadeHud = "Score: " .. score .. " | Combo Breaks: " .. misses .. " | Accuracy: " .. acc .. "% - " .. ratingFC ..
  
  if hudStyle == "Default" then
