@@ -12,10 +12,8 @@ local botplayTxts = {
 }
 
 local debugMode = true -- Activates Debug Mode
-
 local hudStyle = 'Default' -- Change HUD Style
 -- Default, Psych, Kade, Forever, osu!Mania
-
 local wasd = false
 local controls = {
  ['LEFT'] = 'W',
