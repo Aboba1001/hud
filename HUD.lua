@@ -20,9 +20,7 @@ local controls = {
  ["DOWN"] = "S",
  ["RIGHT"] = "D"
 }
-
 function onCreatePost()
-
  setProperty("timeBar.visible", false)
  setProperty("timeTxt.visible", false)
 
