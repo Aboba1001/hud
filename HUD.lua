@@ -1,3 +1,5 @@
+local json = require("libs.dkjson")
+
 --local ratingPoints
 local botplayTxts = {
  "[BOTPLAY]",
