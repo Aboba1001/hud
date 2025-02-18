@@ -1,0 +1,11 @@
+{
+  "randombotplayTxt": false,
+  "keybinds": false,
+  "judgmentBar": false,
+  "scoreTxtStyle": "Forever",
+  "timeTxtStyle": "Default",
+  "scoreTxtFontStyle": "vcr.ttf",
+  "timeTxtFontStyle": "vcr.ttf",
+  "scoreTxtSize": 18,
+  "timeTxtSize": 18
+}
