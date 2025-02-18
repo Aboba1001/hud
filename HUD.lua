@@ -1,5 +1,3 @@
-local json = require("libs.dkjson")
-
 local botplayTxts = {
  "[BOTPLAY]",
  "[AUTOPLAY]",
@@ -12,7 +10,7 @@ local botplayTxts = {
  "WHY CAN\"T YOU JUST\nTURN ON PRACTICE MODE??!?!"
 }
 local debugMode = true -- Activates Debug Mode
-local hudStyle = "Default" -- Change HUD Style
+local hudStyle = scoreTxtStyle -- Change HUD Style
 -- Default, Psych, Kade, Forever, osu!Mania
 local wasd = false
 local controls = {
@@ -24,6 +22,15 @@ local controls = {
 function onCreatePost()
  setProperty("timeBar.visible", false)
  setProperty("timeTxt.visible", false)
+ 
+ debugPrint(currentModDirectory)
+ 
+ configureJson = json.parse(getTextFromFile("mods/My-Mod/_HUDSETTINGS.json"))
+ if configureJson then
+   for key, value in pairs(configureJson) do
+     _G[key] = value
+   end
+ end
 
  local timeTxtX = getProperty("timeTxt.x")
  local timeTxtY = getProperty("timeTxt.y")
@@ -77,15 +84,59 @@ function onUpdatePost()
  local acc = (string.sub(getProperty("ratingPercent")* 100,0,5))
  local health = tostring(getProperty("health") / 2 * 100)
  
- local hudText = "- / Score: " .. score .. " / Misses: " .. misses .. " / ACC & Rating: " .. acc .. "% [" .. ratingFC .. "] / -"
- local foreverHud = "Score: " .. score .. " • Combo Breaks: " ... misses
- local kadeHud = "Score: " .. score .. " | Combo Breaks: " .. misses .. " | Accuracy: " .. acc .. "% - " .. ratingFC ..
+ local style = configureJson.scoreTxtStyle
  
- if hudStyle == "Default" then
-  setTextString("scoreTxt", hudText)
- elseif hudStyle == "Forever" then
-  setTextString("scoreTxt", foreverHud)
- elseif hudStyle == "Kade" then
-  setTextString("scoreTxt", kadeHud)
+ local hudText = "- / Score: " .. score .. " / Misses: " .. misses .. " / ACC & Rating: " .. acc .. "% [" .. ratingFC .. "] / -"
+ local foreverHud = "Score: " .. score .. " • Combo Breaks: " .. misses
+ local kadeHud = "Score: " .. score .. " | Combo Breaks: " .. misses .. " | Accuracy: " .. acc .. "% - " .. ratingFC
+ 
+ if style == "Default" then
+   setTextString("scoreTxt", hudText)
+ elseif style == "Forever" then
+   setTextString("scoreTxt", foreverHud)
+ elseif style == "kadeHud" then
+   setTextString("scoreTxt", kadeHud)
  end
+ 
+end
+
+function onCustomSubstateCreate(name)
+  if name == "Results Screen" then
+    makeLuaSprite("RS_bg", nil, 0, 0)
+    makeGraphic("RS_bg", screenWidth, screenHeight, "000000")
+    setObjectCamera("RS_bg", "other")
+    
+    makeLuaText("RS_TotalScore", "| Score: " .. score, 0, 0, 0)
+    setTextSize("RS_TotalScore", 20)
+    setObjectCamera("RS_TotalScore", "other")
+    
+    makeLuaText("RS_JudgmentBar", "SICKS: " .. sicks .. "\n\nGOODS: " .. goods .. "\n\nBADS: " .. bads .. "\n\nSHITS: " .. shits, 0, 0, 0)
+    setTextSize("RS_JudgmentBar", 25)
+    setObjectCamera("RS_JudgmentBar", "other")
+    
+    if buildTarget == "android" or "ios" then
+      makeLuaText("RS_PressEnter", "Press here to continue!", 0, 0, 0)
+      else
+        makeLuaText("RS_PressEnter", "Click ENTER to continue!", 0, 0, 0)
+    end
+    setTextSize("RS_PressEnter", 30)
+    setObjectCamera("RS_PressEnter", "other")
+    
+    insertToCustomSubstate("RS_TotalScore")
+    insertToCustomSubstate("RS_JudgmentBar")
+    insertToCustomSubstate("RS_PressEnter")
+    
+    local mobilePlatforms = {"android", "ios"}
+    if table.contains(mobilePlatforms, buildTarget) then
+      if keyboardJustPressed("smth") then
+        debugPrint("ok")
+      end
+    end
+    local desktopPlatforms = {"windows", "linux", "mac"}
+    if table.contains(desktopPlatforms, buildTarget) then
+      if keyboardJustPressed("enter") then
+        debugPrint("ok")
+      end
+    end
+  end
 end
